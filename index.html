@@ -1,227 +1,339 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snyk + Partner Integration</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Snyk AWS Billing Integration Infographic</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
-        /* Define Arial font explicitly */
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8;
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #1976D2;
+            align-self: center;
+            margin: 0 1rem;
+        }
+        .flow-box {
+            border: 2px solid #42A5F5;
+            background-color: #BBDEFB;
+            color: #0D47A1;
+        }
+        .timeline-bar {
+            background: linear-gradient(90deg, #42A5F5, #1976D2);
+        }
+        .detail-box {
+            background-color: #E3F2FD;
+            border: 1px solid #90CAF9;
+            color: #0D47A1;
         }
     </style>
 </head>
-<body class="bg-[#0A0D1F]">
-    <div id="app-container" class="font-['Arial'] bg-[#0A0D1F] min-h-screen text-white py-12 px-4 sm:px-6 lg:px-8">
-        <!-- Header section with Snyk-like branding -->
-        <header class="max-w-4xl mx-auto mb-16 text-center pt-8 pb-4 rounded-xl">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold mb-4 leading-tight text-white">
-                Accelerate Innovation Securely with <span class="text-[#0066FF]">Snyk</span> + <span class="text-[#8B5CF6]" id="header-partner-name">AWS</span>
-            </h1>
-            <p class="text-lg sm:text-xl text-[#AAB7C4] max-w-2xl mx-auto">
-                Unlock the full potential of your development lifecycle with Snyk's cutting-edge <span class="font-semibold text-[#0066FF]">AI Trust Platform</span>.
-            </p>
-        </header>
+<body class="bg-gray-100 text-gray-800">
 
-        <!-- Partner Name Input (for dynamic demo, can be removed for static app) -->
-        <div class="max-w-xl mx-auto mb-12 text-center">
-            <label for="partnerInput" class="block text-md font-medium text-white mb-2">
-                Enter Partner Name (for demo purposes):
-            </label>
-            <input
-                type="text"
-                id="partnerInput"
-                value="AWS"
-                class="w-full px-5 py-3 border border-[#3E4A6F] bg-[#1A1F3B] text-white rounded-xl shadow-sm focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent placeholder:text-[#6B7280]"
-                placeholder="e.g., GitHub, Azure DevOps"
-            />
+    <header class="bg-[#0D47A1] text-white p-8 text-center shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Project Overview</h1>
+        <p class="mt-4 text-xl md:text-2xl font-light">Automating the Snyk & AWS Marketplace Billing Integration</p>
+    </header>
+
+    <main class="container mx-auto p-4 md:p-8">
+
+        <section id="vision" class="my-12">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl font-bold text-[#0D47A1] mb-4">The Vision: A Fully Automated Pipeline</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
+                    This project replaces manual billing processes with a robust, scalable, and secure system. By leveraging serverless AWS tech and Salesforce APIs, we will enhance efficiency, reduce errors, and gain real-time visibility into AWS Marketplace revenue.
+                </p>
+                <div class="bg-blue-50 p-8 rounded-xl border border-blue-200 inline-block">
+                    <p class="text-2xl font-semibold text-gray-700">Estimated Project Duration</p>
+                    <p class="text-7xl md:text-8xl font-extrabold text-[#1976D2] tracking-tighter">10-12</p>
+                    <p class="text-3xl font-bold text-gray-600">Weeks</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="timeline" class="my-12">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">The Blueprint: Project Timeline & Phases</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                    The project is structured into four core phases, followed by ongoing optimization. Each phase has clear objectives and deliverables, ensuring a steady progression from planning to deployment.
+                </p>
+                <div class="space-y-6">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">2 Wks</div>
+                        <div class="w-full bg-gray-200 rounded-full p-1">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 20%">Phase 1: Discovery & Planning</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">3 Wks</div>
+                        <div class="w-full bg-gray-200 rounded-full p-1">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 45%">Phase 2: Salesforce Config & Automation</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">3 Wks</div>
+                        <div class="w-full bg-gray-200 rounded-full p-1">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 70%">Phase 3: AWS Integration Development</div>
+                        </div>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">2 Wks</div>
+                        <div class="w-full bg-gray-200 rounded-full p-1">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 90%">Phase 4: Testing & Deployment</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture" class="my-12">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">The Engine: A Look at the Architecture</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                    This integration is powered by a serverless AWS architecture that listens for new reports, processes them, and securely pushes the data into Salesforce for billing and analysis.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center flex-wrap gap-4">
+                    <div class="flow-box p-4 rounded-lg text-center font-semibold">Snyk Backend<br/>(Tracks Usage)</div>
+                    <div class="flow-arrow transform md:rotate-0">→</div>
+                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS Marketplace<br/>(Metering Service)</div>
+                    <div class="flow-arrow transform rotate-90 md:rotate-0">→</div>
+                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS S3<br/>(Receives Reports)</div>
+                    <div class="flow-arrow transform md:rotate-0">→</div>
+                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS Lambda<br/>(Processes Data)</div>
+                    <div class="flow-arrow transform md:rotate-0">→</div>
+                    <div class="flow-box p-4 rounded-lg text-center font-semibold">Salesforce<br/>(Ingests & Bills)</div>
+                </div>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
+            <section id="team" class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-2xl font-bold text-[#0D47A1] text-center mb-6">The Team: Resource Allocation (FTE)</h2>
+                <p class="text-md text-gray-600 mb-6 text-center">A dedicated, cross-functional team will drive this project, ensuring expertise across AWS, Salesforce, and quality assurance.</p>
+                <div class="chart-container h-80 md:h-96">
+                    <canvas id="resourceChart"></canvas>
+                </div>
+            </section>
+
+            <section id="risks" class="bg-white rounded-2xl shadow-xl p-8">
+                <h2 class="text-2xl font-bold text-[#0D47A1] text-center mb-6">The Challenge: Navigating Project Risks</h2>
+                <p class="text-md text-gray-600 mb-6 text-center">Proactive risk management is key. We have identified potential challenges and established clear mitigation strategies for each.</p>
+                <div class="space-y-3">
+                    <div class="p-3 bg-blue-50 border-l-4 border-blue-400 rounded">
+                        <h3 class="font-bold text-blue-800">Data Mismatch/Inaccuracy</h3>
+                        <p class="text-sm text-blue-700">Mitigation: Thorough UAT and robust data validation in Lambda.</p>
+                    </div>
+                    <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                        <h3 class="font-bold text-yellow-800">Salesforce API Limits</h3>
+                        <p class="text-sm text-yellow-700">Mitigation: Implement batching for API calls and monitor usage.</p>
+                    </div>
+                    <div class="p-3 bg-red-50 border-l-4 border-red-400 rounded">
+                        <h3 class="font-bold text-red-800">Security Vulnerabilities</h3>
+                        <p class="text-sm text-red-700">Mitigation: Adhere to AWS & Salesforce security best practices.</p>
+                    </div>
+                    <div class="p-3 bg-green-50 border-l-4 border-green-400 rounded">
+                        <h3 class="font-bold text-green-800">Slow Performance</h3>
+                        <p class="text-sm text-green-700">Mitigation: Optimize Lambda runtime and Salesforce query efficiency.</p>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <!-- Benefits section -->
-        <section class="max-w-6xl mx-auto mb-20">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-12 text-white">
-                Benefits for Every Role
-            </h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <!-- Developer Benefits -->
-                <div class="bg-[#1A1F3B] p-8 rounded-2xl shadow-xl border border-[#3E4A6F] flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                    <div class="bg-gradient-to-br from-[#E6CCFF] to-[#D1ACE6] p-4 rounded-full mb-6 shadow-md">
-                        <svg class="w-10 h-10 text-[#261266]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M10 20l4-16m4 4l4 4-4 4M6 4l-4 4 4 4"></path>
-                        </svg>
-                    </div>
-                    <h3 class="text-2xl font-semibold mb-4 text-[#0066FF]">For Developers</h3>
-                    <ul class="text-[#AAB7C4] list-none text-left space-y-3">
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Shift Left Security:** Find and fix vulnerabilities early, directly in your familiar workflow.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **AI-Powered Remediation:** Leverage intelligent suggestions for faster, more accurate fixes, integrated into your pull requests.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Accelerated Delivery:** Build securely without sacrificing speed or developer productivity.
-                            </p>
-                        </li>
-                    </ul>
-                </div>
+        <section id="detailed-architecture" class="my-12">
+            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
+                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">Deep Dive: Architecture Step-by-Step</h2>
+                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
+                    Understanding the granular components and interactions at each stage is crucial for successful implementation and maintenance.
+                </p>
 
-                <!-- AppSec Engineer Benefits -->
-                <div class="bg-[#1A1F3B] p-8 rounded-2xl shadow-xl border border-[#3E4A6F] flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                    <div class="bg-gradient-to-br from-[#A1C9F7] to-[#8B5CF6] p-4 rounded-full mb-6 shadow-md">
-                        <svg class="w-10 h-10 text-[#261266]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.001 12.001 0 002.92 14.931l1.558 2.336c.651.977 1.889 1.542 3.256 1.542h6.151c1.367 0 2.605-.565 3.256-1.542l1.558-2.336A12.001 12.001 0 0021.08 7.004z"></path>
-                        </svg>
+                <div class="space-y-8">
+                    <!-- Step 1: Snyk Backend -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">1. Snyk Backend (Usage Tracking & Metering)</h3>
+                        <p class="text-md mb-2">Snyk's internal systems continuously track customer consumption of features and services. This raw usage data is then aggregated and prepared for AWS Marketplace.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Core Logic:** Internal Snyk application logic to capture and summarize usage.</li>
+                            <li>**API Call:** Calls `AWS Marketplace MeterUsage` API hourly, sending consumption data for each defined product dimension.</li>
+                            <li>**Data Sent:** Buyer Account ID, Product Code, Usage Dimensions (e.g., 'scanned_lines', 'active_users'), Quantity.</li>
+                        </ul>
                     </div>
-                    <h3 class="text-2xl font-semibold mb-4 text-[#0066FF]">For AppSec Engineers</h3>
-                    <ul class="text-[#AAB7C4] list-none text-left space-y-3">
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Comprehensive Visibility:** Gain a unified view of security across your entire application landscape.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Automated Policy Enforcement:** Define and automate security policies, ensuring consistent compliance without manual overhead.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Prioritized Risk Management:** Reduce alert fatigue and focus on critical issues with intelligent risk scoring.
-                            </p>
-                        </li>
-                    </ul>
-                </div>
 
-                <!-- CISO Benefits -->
-                <div class="bg-[#1A1F3B] p-8 rounded-2xl shadow-xl border border-[#3E4A6F] flex flex-col items-center text-center transform transition duration-300 hover:scale-105 hover:shadow-2xl">
-                    <div class="bg-gradient-to-br from-[#D1ACE6] to-[#E6CCFF] p-4 rounded-full mb-6 shadow-md">
-                        <svg class="w-10 h-10 text-[#261266]" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
-                        </svg>
+                    <!-- Step 2: AWS Marketplace -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">2. AWS Marketplace (Billing & Reporting)</h3>
+                        <p class="text-md mb-2">AWS Marketplace processes the metering records and manages customer entitlements, ultimately generating comprehensive billing reports for sellers.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Metering Service:** Aggregates hourly usage data received from Snyk.</li>
+                            <li>**Entitlement Service:** Provides customer subscription details (e.g., via `GetEntitlements`).</li>
+                            <li>**Report Generation:** Produces various billing and usage reports (e.g., Daily Usage, Monthly Billing Reports) and deposits them into the seller's S3 bucket.</li>
+                        </ul>
                     </div>
-                    <h3 class="text-2xl font-semibold mb-4 text-[#0066FF]">For CISOs</h3>
-                    <ul class="text-[#AAB7C4] list-none text-left space-y-3">
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Proactive Risk Reduction:** Intelligently reduce your organization's attack surface and exposure.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Effortless Compliance:** Meet regulatory requirements with built-in governance and auditable security practices.
-                            </p>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="mr-2 text-[#0066FF]">&#10003;</span>
-                            <p>
-                                **Secure AI Innovation:** Build trust in your AI-driven software, ensuring security from design to deployment.
-                            </p>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </section>
 
-        <!-- Integration Setup Steps -->
-        <section class="max-w-4xl mx-auto mb-20 p-10 rounded-2xl shadow-xl bg-[#1A1F3B] text-white border border-[#3E4A6F]">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-center mb-10">
-                Getting Started: Snyk + <span id="steps-partner-name">AWS</span> in 3 Simple Steps
-            </h2>
-            <div class="space-y-8">
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 bg-[#0066FF] text-white w-12 h-12 flex items-center justify-center rounded-full font-bold text-2xl mr-5 shadow-md border border-[#0056E0]">1</div>
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2">Connect Your Accounts</h3>
-                        <p class="text-lg text-[#AAB7C4]">
-                            Easily link your Snyk account with your <span id="connect-partner-name">AWS</span> instance. This typically involves generating an API token or authenticating directly for seamless integration.
-                        </p>
+                    <!-- Step 3: AWS S3 (Report Storage & Event Source) -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">3. AWS S3 (Report Storage & Event Source)</h3>
+                        <p class="text-md mb-2">A dedicated S3 bucket serves as the secure landing zone for AWS Marketplace reports, triggering the next stage of the data pipeline.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Secure Storage:** Stores CSV reports delivered by AWS Marketplace.</li>
+                            <li>**Event Trigger:** Configured with S3 Event Notifications or an AWS EventBridge rule to detect new `.csv` file uploads.</li>
+                            <li>**Purpose:** Initiates the data processing workflow by invoking the AWS Lambda function.</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 bg-[#0066FF] text-white w-12 h-12 flex items-center justify-center rounded-full font-bold text-2xl mr-5 shadow-md border border-[#0056E0]">2</div>
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2">Configure Projects & Policies</h3>
-                        <p class="text-lg text-[#AAB7C4]">
-                            Import your projects from <span id="configure-partner-name">AWS</span> into Snyk. Define granular security policies and assign them to your repositories or applications. Snyk’s AI will assist in identifying key areas of focus and compliance.
-                        </p>
+
+                    <!-- Step 4: AWS Lambda (ETL & Salesforce Integration) -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">4. AWS Lambda (ETL & Salesforce Integration)</h3>
+                        <p class="text-md mb-2">This serverless function is the core of the data transformation and ingestion process, acting as the bridge between AWS and Salesforce.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Trigger:** Invoked by S3 event when a new report arrives.</li>
+                            <li>**Data Extraction:** Reads and parses the CSV file from S3.</li>
+                            <li>**Data Transformation:** Maps AWS report fields to Salesforce custom object fields.</li>
+                            <li>**Salesforce API Call:** Authenticates with Salesforce and uses REST API (`POST`, `PATCH`) to create/update `AWS_Usage_Record__c` and `AWS_Marketplace_Subscription__c` objects.</li>
+                            <li>**Error Handling & Logging:** Includes `try/catch` blocks, retries, and CloudWatch logging for operational visibility.</li>
+                            <li>**IAM Role:** Uses an AWS IAM Role with minimal permissions to S3 and Secrets Manager.</li>
+                        </ul>
                     </div>
-                </div>
-                <div class="flex items-start">
-                    <div class="flex-shrink-0 bg-[#0066FF] text-white w-12 h-12 flex items-center justify-center rounded-full font-bold text-2xl mr-5 shadow-md border border-[#0056E0]">3</div>
-                    <div>
-                        <h3 class="text-2xl font-semibold mb-2">Automate Scans & Remediation</h3>
-                        <p class="text-lg text-[#AAB7C4]">
-                            Set up automated scans within your existing CI/CD pipelines in <span id="automate-partner-name">AWS</span>. Snyk will then provide real-time feedback, actionable recommendations, and AI-driven fixes for vulnerabilities, ensuring secure deployments.
-                        </p>
+
+                    <!-- Step 5: AWS Secrets Manager (Credential Security) -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">5. AWS Secrets Manager (Credential Security)</h3>
+                        <p class="text-md mb-2">Ensures secure storage and retrieval of sensitive Salesforce API credentials, preventing hardcoding in Lambda code.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Secure Storage:** Stores Salesforce OAuth `client_id`, `client_secret`, and potentially username/password.</li>
+                            <li>**Integration:** Lambda function retrieves these credentials at runtime to authenticate with Salesforce.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Step 6: Salesforce (Data Ingestion & Automation) -->
+                    <div class="detail-box p-6 rounded-lg shadow-md">
+                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">6. Salesforce (Data Ingestion & Automation)</h3>
+                        <p class="text-md mb-2">The final destination for the billing data, where it is stored, processed, and used for revenue operations.</p>
+                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
+                            <li>**Custom Objects:** `AWS_Marketplace_Subscription__c` and `AWS_Usage_Record__c` to store data.</li>
+                            <li>**Salesforce REST API:** Endpoint for Lambda to interact with Salesforce objects.</li>
+                            <li>**Connected App:** Manages API access and OAuth authentication.</li>
+                            <li>**Apex/Flows:** Automation logic on `AWS_Usage_Record__c` to calculate charges, update invoices, and link to existing customer `Account` records.</li>
+                            <li>**Reporting & Dashboards:** Provides visibility into AWS Marketplace usage and billing data for Finance and Sales Ops.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Call to Action -->
-        <section class="max-w-2xl mx-auto text-center p-10 bg-[#1A1F3B] rounded-2xl shadow-xl border border-[#3E4A6F]">
-            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-white">Ready to Revolutionize Your Secure Software?</h2>
-            <p class="text-lg text-[#AAB7C4] mb-8 max-w-xl mx-auto">
-                Embrace the power of Snyk's AI Trust Platform to build, deploy, and operate secure software confidently in the AI era.
-            </p>
-            <button class="bg-[#0066FF] hover:bg-[#0056E0] text-white font-bold py-4 px-10 rounded-lg shadow-lg transform transition duration-300 hover:scale-105 focus:outline-none focus:ring-4 focus:ring-blue-300 text-xl border-2 border-[#0066FF] hover:border-[#0056E0]">
-                Connect with a Snyk Expert Today
-            </button>
-        </section>
+    </main>
 
-        <!-- Footer -->
-        <footer class="mt-20 text-center text-[#6B7280] text-sm">
-            <p class="mb-2">Snyk.io &copy; <span id="current-year"></span> All rights reserved.</p>
-            <p>
-                <a href="#" class="text-[#0066FF] hover:underline mx-2">Privacy Policy</a> |
-                <a href="#" class="text-[#0066FF] hover:underline mx-2">Terms of Service</a>
-            </p>
-        </footer>
-    </div>
+    <footer class="bg-[#0D47A1] text-white p-6 text-center mt-12">
+        <p>Driving Efficiency and Growth Through Automation</p>
+    </footer>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const partnerInput = document.getElementById('partnerInput');
-            const headerPartnerName = document.getElementById('header-partner-name');
-            const stepsPartnerName = document.getElementById('steps-partner-name');
-            const connectPartnerName = document.getElementById('connect-partner-name');
-            const configurePartnerName = document.getElementById('configure-partner-name');
-            const automatePartnerName = document.getElementById('automate-partner-name');
-            const currentYearSpan = document.getElementById('current-year');
+        function wrapText(str) {
+            const maxLength = 16;
+            if (typeof str !== 'string' || str.length <= maxLength) {
+                return str;
+            }
+            const words = str.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + ' ' + word).trim().length > maxLength) {
+                    lines.push(currentLine.trim());
+                    currentLine = word;
+                } else {
+                    currentLine = (currentLine + ' ' + word).trim();
+                }
+            }
+            if (currentLine) {
+                lines.push(currentLine.trim());
+            }
+            return lines;
+        }
 
-            // Initialize current year in the footer
-            currentYearSpan.textContent = new Date().getFullYear();
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
 
-            // Function to update all instances of partner name
-            const updatePartnerNames = () => {
-                const newPartnerName = partnerInput.value || 'AWS'; // Default to 'AWS' if input is empty
-                headerPartnerName.textContent = newPartnerName;
-                stepsPartnerName.textContent = newPartnerName;
-                connectPartnerName.textContent = newPartnerName;
-                configurePartnerName.textContent = newPartnerName;
-                automatePartnerName.textContent = newPartnerName;
-            };
-
-            // Set initial partner names based on input value
-            updatePartnerNames();
-
-            // Add event listener for input change
-            partnerInput.addEventListener('input', updatePartnerNames);
+        const ctx = document.getElementById('resourceChart').getContext('2d');
+        const resourceChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['AWS Engineer', 'Salesforce Dev', 'Business Analyst', 'QA Engineer', 'Solution Architect'].map(wrapText),
+                datasets: [{
+                    label: 'Full-Time Equivalent (FTE)',
+                    data: [1.0, 1.0, 0.5, 0.5, 0.2],
+                    backgroundColor: [
+                        '#42A5F5',
+                        '#1976D2',
+                        '#42A5F5',
+                        '#1976D2',
+                        '#42A5F5'
+                    ],
+                    borderColor: '#0D47A1',
+                    borderWidth: 2,
+                    borderRadius: 5
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                indexAxis: 'y',
+                scales: {
+                    x: {
+                        beginAtZero: true,
+                        grid: {
+                            color: '#e0e0e0',
+                            borderColor: '#c0c0c0'
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: '#333'
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            title: tooltipTitleCallback
+                        }
+                    }
+                }
+            }
         });
     </script>
 </body>
