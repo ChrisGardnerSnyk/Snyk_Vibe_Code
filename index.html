@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Snyk AWS Billing Integration Infographic</title>
+    <title>Snyk AWS Marketplace Billing Integration: Engineering Deep Dive</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,7 +12,95 @@
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #f0f4f8;
+            background-color: #f0f4f8; /* Light gray from palette */
+        }
+        .header-bg {
+            background-color: #0D47A1; /* Darkest blue */
+        }
+        .section-header-text {
+            color: #0D47A1; /* Darkest blue */
+        }
+        .accent-color {
+            color: #1976D2; /* Medium blue */
+        }
+        .highlight-bg {
+            background-color: #E3F2FD; /* Lightest blue */
+        }
+        .border-accent {
+            border-color: #90CAF9; /* Lighter blue border */
+        }
+        .timeline-bar {
+            background: linear-gradient(90deg, #42A5F5, #1976D2); /* Blue gradient */
+        }
+        .phase-card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+        .flow-box, .api-box, .data-box, .security-box {
+            padding: 1rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            font-weight: 600;
+            margin: 0.5rem;
+            min-width: 100px;
+            flex-shrink: 0;
+        }
+        .flow-box {
+            background-color: #BBDEFB; /* Light blue */
+            border: 2px solid #42A5F5; /* Medium blue border */
+            color: #0D47A1; /* Darkest blue text */
+        }
+        .api-box {
+            background-color: #E3F2FD; /* Lightest blue */
+            border: 1px solid #1976D2; /* Medium blue border */
+            color: #0D47A1; /* Darkest blue text */
+            font-size: 0.875rem;
+        }
+        .data-box {
+            background-color: #CFD8DC; /* Grayish blue from example image (if no direct match in palette) */
+            border: 1px solid #78909C;
+            color: #263238;
+            font-size: 0.875rem;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: #1976D2;
+            align-self: center;
+            margin: 0 0.5rem;
+        }
+        .detail-card {
+            background-color: #E3F2FD; /* Lightest blue */
+            border: 1px solid #90CAF9; /* Lighter blue border */
+            color: #2C5282; /* Darker blue text */
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .detail-card h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0D47A1; /* Darkest blue */
+            margin-bottom: 1rem;
+        }
+        .detail-card ul {
+            list-style: disc;
+            margin-left: 1.25rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .detail-card li {
+            margin-bottom: 0.5rem;
+        }
+        .code-block {
+            background-color: #E0E0E0; /* Light gray for code background */
+            color: #424242; /* Dark gray for code text */
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            font-size: 0.85rem;
+            overflow-x: auto;
+            margin-top: 0.75rem;
         }
         .chart-container {
             position: relative;
@@ -28,223 +116,433 @@
                 height: 350px;
             }
         }
-        .flow-arrow {
-            font-size: 2rem;
-            color: #1976D2;
-            align-self: center;
-            margin: 0 1rem;
-        }
-        .flow-box {
-            border: 2px solid #42A5F5;
-            background-color: #BBDEFB;
-            color: #0D47A1;
-        }
-        .timeline-bar {
-            background: linear-gradient(90deg, #42A5F5, #1976D2);
-        }
-        .detail-box {
-            background-color: #E3F2FD;
-            border: 1px solid #90CAF9;
-            color: #0D47A1;
-        }
     </style>
 </head>
 <body class="bg-gray-100 text-gray-800">
 
-    <header class="bg-[#0D47A1] text-white p-8 text-center shadow-lg">
-        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Project Overview</h1>
-        <p class="mt-4 text-xl md:text-2xl font-light">Automating the Snyk & AWS Marketplace Billing Integration</p>
+    <header class="header-bg text-white p-8 text-center shadow-lg">
+        <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">Snyk AWS Marketplace Billing Integration</h1>
+        <p class="mt-4 text-xl md:text-2xl font-light">A Comprehensive Engineering Deep Dive</p>
     </header>
 
     <main class="container mx-auto p-4 md:p-8">
 
-        <section id="vision" class="my-12">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12 text-center">
-                <h2 class="text-3xl font-bold text-[#0D47A1] mb-4">The Vision: A Fully Automated Pipeline</h2>
+        <section id="executive-summary" class="my-12">
+            <div class="phase-card p-8 md:p-12 text-center">
+                <h2 class="text-3xl font-bold section-header-text mb-4">Executive Summary for Engineering Leaders</h2>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-8">
-                    This project replaces manual billing processes with a robust, scalable, and secure system. By leveraging serverless AWS tech and Salesforce APIs, we will enhance efficiency, reduce errors, and gain real-time visibility into AWS Marketplace revenue.
+                    This document details the engineering blueprint for automating Snyk's AWS Marketplace billing integration. Our focus is on building a robust, scalable, and secure data pipeline for usage metering, entitlement checks, and financial reporting. By strategically leveraging AWS services and Salesforce APIs, we will eliminate manual processes, enhance billing accuracy, and accelerate revenue recognition. This initiative is critical for Snyk's operational efficiency and scalable growth on AWS Marketplace.
                 </p>
-                <div class="bg-blue-50 p-8 rounded-xl border border-blue-200 inline-block">
+                <div class="highlight-bg p-8 rounded-xl border border-blue-200 inline-block">
                     <p class="text-2xl font-semibold text-gray-700">Estimated Project Duration</p>
-                    <p class="text-7xl md:text-8xl font-extrabold text-[#1976D2] tracking-tighter">10-12</p>
+                    <p class="text-7xl md:text-8xl font-extrabold accent-color tracking-tighter">10-12</p>
                     <p class="text-3xl font-bold text-gray-600">Weeks</p>
                 </div>
             </div>
         </section>
 
-        <section id="timeline" class="my-12">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">The Blueprint: Project Timeline & Phases</h2>
+        <section id="timeline-detail" class="my-12">
+            <div class="phase-card p-8 md:p-12">
+                <h2 class="text-3xl font-bold section-header-text text-center mb-8">Engineering Timeline: Phases & Key Steps</h2>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                    The project is structured into four core phases, followed by ongoing optimization. Each phase has clear objectives and deliverables, ensuring a steady progression from planning to deployment.
+                    The project is structured into four core engineering phases, each with a defined set of key tasks and a detailed timeline, ensuring a methodical approach from initial design to production deployment and ongoing optimization.
                 </p>
-                <div class="space-y-6">
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">2 Wks</div>
-                        <div class="w-full bg-gray-200 rounded-full p-1">
-                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 20%">Phase 1: Discovery & Planning</div>
+
+                <div class="space-y-10">
+                    <!-- Phase 1 -->
+                    <div class="border-b pb-6 border-blue-200 last:border-b-0">
+                        <h3 class="text-2xl font-bold accent-color mb-4">Phase 1: Discovery & Planning (2 Weeks)</h3>
+                        <div class="w-full bg-gray-200 rounded-full p-1 mb-4">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 20%">Weeks 1-2</div>
                         </div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>**Requirement Gathering:** Define precise data points for Salesforce, reporting needs, and reconciliation. Identify all metering dimensions for Snyk products.</li>
+                            <li>**Salesforce Data Model Design:** Architect custom objects (`AWS_Marketplace_Subscription__c`, `AWS_Usage_Record__c`), fields, and relationships with `Account` objects.</li>
+                            <li>**Technical Architecture Finalization:** Design for AWS Lambda, S3 event triggers, SNS/SQS, Secrets Manager, and Salesforce API interactions.</li>
+                            <li>**Security & Compliance:** Plan IAM roles (least privilege), Salesforce Connected App security (OAuth 2.0), and data encryption (at rest/in transit).</li>
+                            <li>**API Deep Dive:** Thorough review of AWS Marketplace Metering/Entitlement APIs and Salesforce REST API capabilities.</li>
+                        </ul>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">3 Wks</div>
-                        <div class="w-full bg-gray-200 rounded-full p-1">
-                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 45%">Phase 2: Salesforce Config & Automation</div>
+
+                    <!-- Phase 2 -->
+                    <div class="border-b pb-6 border-blue-200 last:border-b-0">
+                        <h3 class="text-2xl font-bold accent-color mb-4">Phase 2: Salesforce Configuration & Automation (3 Weeks)</h3>
+                        <div class="w-full bg-gray-200 rounded-full p-1 mb-4">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 45%">Weeks 3-5</div>
                         </div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>**Custom Object & Field Implementation:** Deploy Salesforce custom objects and fields.</li>
+                            <li>**Salesforce Connected App Setup:** Configure OAuth 2.0 flow for server-to-server integration with appropriate API scopes.</li>
+                            <li>**Data Mapping & PoC:** Develop Apex/Flows for initial data transformation and build a Proof of Concept for data ingestion.</li>
+                            <li>**Salesforce Automation Development:** Implement Apex Triggers/Flows on custom objects to process ingested data, calculate charges, and link to billing/invoicing logic.</li>
+                            <li>**Reporting Prototyping:** Design initial Salesforce reports and dashboards for usage visualization and reconciliation.</li>
+                        </ul>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">3 Wks</div>
-                        <div class="w-full bg-gray-200 rounded-full p-1">
-                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 70%">Phase 3: AWS Integration Development</div>
+
+                    <!-- Phase 3 -->
+                    <div class="border-b pb-6 border-blue-200 last:border-b-0">
+                        <h3 class="text-2xl font-bold accent-color mb-4">Phase 3: AWS Integration Development (3 Weeks)</h3>
+                        <div class="w-full bg-gray-200 rounded-full p-1 mb-4">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 70%">Weeks 6-8</div>
                         </div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>**S3 Bucket & Secrets Manager Configuration:** Set up secure S3 bucket for reports and store Salesforce credentials in Secrets Manager.</li>
+                            <li>**AWS Lambda Development:** Build Lambda functions (Python/Node.js) for:
+                                <ul class="list-circle list-inside ml-6">
+                                    <li>Reading/parsing CSV reports from S3.</li>
+                                    <li>Consuming SQS messages (SNS notifications).</li>
+                                    <li>Transforming data for Salesforce schema.</li>
+                                    <li>Authenticating and calling Salesforce REST API.</li>
+                                    <li>Implementing robust error handling, retries, and CloudWatch logging.</li>
+                                </ul>
+                            </li>
+                            <li>**Event Trigger Configuration:** Set up S3 event notifications and/or EventBridge rules to trigger Lambda. Subscribe SQS queues to SNS topics.</li>
+                            <li>**IAM Role Configuration:** Define and attach least-privilege IAM roles for Lambda access to S3, Secrets Manager, AWS Marketplace APIs, and SQS.</li>
+                        </ul>
                     </div>
-                    <div class="flex items-center space-x-4">
-                        <div class="bg-[#0D47A1] text-white rounded-full h-16 w-16 flex-shrink-0 flex items-center justify-center font-bold text-lg">2 Wks</div>
-                        <div class="w-full bg-gray-200 rounded-full p-1">
-                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 90%">Phase 4: Testing & Deployment</div>
+
+                    <!-- Phase 4 -->
+                    <div class="border-b pb-6 border-blue-200 last:border-b-0">
+                        <h3 class="text-2xl font-bold accent-color mb-4">Phase 4: Testing & Deployment (2 Weeks)</h3>
+                        <div class="w-full bg-gray-200 rounded-full p-1 mb-4">
+                            <div class="timeline-bar text-xs font-medium text-blue-100 text-center p-2 leading-none rounded-full" style="width: 90%">Weeks 9-10</div>
                         </div>
+                        <ul class="list-disc list-inside text-gray-700 space-y-2">
+                            <li>**Unit & Integration Testing:** Comprehensive testing of all Lambda functions, Salesforce automation, and end-to-end data flow with simulated and real AWS Marketplace data.</li>
+                            <li>**Performance & Security Testing:** Assess Lambda execution, Salesforce API limits, and security vulnerabilities.</li>
+                            <li>**User Acceptance Testing (UAT):** Finance and Sales Operations validate data accuracy, reconciliation, and reporting.</li>
+                            <li>**Deployment Automation:** Automate deployment processes for all AWS and Salesforce components.</li>
+                            <li>**Documentation:** Finalize technical and operational documentation.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="architecture" class="my-12">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">The Engine: A Look at the Architecture</h2>
+        <section id="architecture-detail" class="my-12">
+            <div class="phase-card p-8 md:p-12">
+                <h2 class="text-3xl font-bold section-header-text text-center mb-8">Architectural Deep Dive: Step-by-Step Implementation</h2>
                 <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                    This integration is powered by a serverless AWS architecture that listens for new reports, processes them, and securely pushes the data into Salesforce for billing and analysis.
+                    This section provides a granular breakdown of the technical components and interactions, illustrating the data flow and key engineering considerations at each stage of the billing integration pipeline.
                 </p>
-                <div class="flex flex-col md:flex-row justify-center items-center flex-wrap gap-4">
-                    <div class="flow-box p-4 rounded-lg text-center font-semibold">Snyk Backend<br/>(Tracks Usage)</div>
-                    <div class="flow-arrow transform md:rotate-0">→</div>
-                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS Marketplace<br/>(Metering Service)</div>
-                    <div class="flow-arrow transform rotate-90 md:rotate-0">→</div>
-                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS S3<br/>(Receives Reports)</div>
-                    <div class="flow-arrow transform md:rotate-0">→</div>
-                    <div class="flow-box p-4 rounded-lg text-center font-semibold">AWS Lambda<br/>(Processes Data)</div>
-                    <div class="flow-arrow transform md:rotate-0">→</div>
-                    <div class="flow-box p-4 rounded-lg text-center font-semibold">Salesforce<br/>(Ingests & Bills)</div>
+
+                <!-- Step 1: Snyk Backend (Usage Generation & Metering Calls) -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">1. Snyk Backend: Usage Tracking & Metering Calls</h3>
+                    <p class="mb-4 text-gray-700">Snyk's internal application diligently tracks customer usage of features. This raw usage data is aggregated and sent to AWS Marketplace.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">Snyk Product<br/>Usage Data</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Snyk Backend<br/>App Logic</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box text-sm">Aggregates Hourly<br/>Consumption</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Prepare for AWS API</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**Action:** Invoke AWS Marketplace Metering Service APIs.</li>
+                        <li>**API Call (`MeterUsage`):** For custom dimensions (e.g., 'scanned_lines', 'active_users').</li>
+                        <div class="code-block">
+                            <pre><code>import boto3
+import time
+
+marketplace_client = boto3.client("meteringmarketplace")
+response = marketplace_client.meter_usage(
+    ProductCode="YOUR_PRODUCT_CODE",
+    Timestamp=int(time.time()),
+    UsageDimension="YOUR_DIMENSION_NAME",
+    UsageQuantity=YOUR_QUANTITY_VALUE,
+    DryRun=False
+)</code></pre>
+                        </div>
+                        <li>**API Call (`RegisterUsage`):** For container products with per-task/per-pod pricing.</li>
+                        <div class="code-block">
+                            <pre><code>import boto3
+marketplace_client = boto3.client("meteringmarketplace")
+response = marketplace_client.register_usage(
+    ProductCode="YOUR_PRODUCT_CODE",
+    PublicKeyVersion=1,
+    Nonce="YOUR_UNIQUE_NONCE"
+)</code></pre>
+                        </div>
+                        <li>**API Call (`ResolveCustomer`):** On new SaaS subscription, from Snyk's registration page.</li>
+                        <div class="code-block">
+                            <pre><code>import boto3
+
+marketplace_client = boto3.client('meteringmarketplace')
+customer_data = marketplace_client.resolve_customer(
+    'X_AMZN_MARKETPLACE_TOKEN'
+)
+# customer_data contains ProductCode, CustomerIdentifier, CustomerAWSAccountId</code></pre>
+                        </div>
+                        <li>**Engineering Note:** Implement robust error handling (e.g., retries with exponential backoff for transient network issues) for all metering calls to ensure data delivery.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 2: AWS Marketplace & Event Publishing -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">2. AWS Marketplace: Billing Aggregation & Event Publishing</h3>
+                    <p class="mb-4 text-gray-700">AWS Marketplace processes incoming metering data, manages entitlements, and publishes official reports and notifications.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">AWS Marketplace<br/>Metering Service</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">AWS Marketplace<br/>Entitlement Service</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box text-sm">Aggregates & Processes<br/>Usage Data</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Generates Reports<br/>& Notifications</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**Reports:** Daily, Monthly, and Disbursement reports (CSV format) are delivered to a pre-configured S3 bucket in Snyk's AWS account. This data is critical for financial reconciliation.</li>
+                        <li>**Notifications (SNS):**
+                            <ul class="list-circle list-inside ml-6">
+                                <li>`aws-mp-subscription-notification`: For subscribe/unsubscribe events.</li>
+                                <li>`aws-mp-entitlement-notification`: For contract entitlement changes (new, upgrade, expired).</li>
+                            </ul>
+                        </li>
+                        <li>**Engineering Note:** Ensure proper IAM permissions for AWS Marketplace to write to your S3 bucket and publish to your SNS topics.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 3: AWS Event & Data Ingestion (S3, SNS, SQS, Lambda) -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">3. AWS Event & Data Ingestion: Automated Pipeline</h3>
+                    <p class="mb-4 text-gray-700">This layer is responsible for securely ingesting and pre-processing data from AWS Marketplace reports and real-time notifications.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">AWS S3<br/>(Reports)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">S3 Event<br/>Notification</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">AWS Lambda<br/>(Report Processor)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Data<br/>Transformation</div>
+                    </div>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap mt-4">
+                        <div class="flow-box">AWS SNS<br/>(Notifications)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">AWS SQS<br/>(Queue)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">AWS Lambda<br/>(Notification Handler)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Event-Driven<br/>Logic</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**S3 Report Processor (AWS Lambda):**
+                            <ul>
+                                <li>**Trigger:** Configured with an S3 event trigger (e.g., `s3:ObjectCreated:Put`).</li>
+                                <li>**Logic:** Reads CSV files from S3, parses rows, validates data, and maps fields to Salesforce schema.</li>
+                                <li>**Python Snippet (CSV Parsing):**</li>
+                                <div class="code-block">
+                                    <pre><code>import csv
+import io
+import boto3
+
+s3_client = boto3.client('s3')
+
+def process_s3_report(event, context):
+    bucket = event['Records'][0]['s3']['bucket']['name']
+    key = event['Records'][0]['s3']['object']['key']
+    
+    response = s3_client.get_object(Bucket=bucket, Key=key)
+    csv_data = response['Body'].read().decode('utf-8')
+    reader = csv.DictReader(io.StringIO(csv_data))
+    
+    for row in reader:
+        # Transform row data for Salesforce
+        # salesforce_data = transform_data(row)
+        # push_to_salesforce(salesforce_data)
+        pass</code></pre>
+                                </div>
+                            </ul>
+                        </li>
+                        <li>**SNS/SQS Notification Handler (AWS Lambda):**
+                            <ul>
+                                <li>**Trigger:** Configured with an SQS trigger.</li>
+                                <li>**Logic:** Processes messages from SQS queue (JSON payloads from SNS). Determines action (`subscribe-success`, `entitlement-updated`, etc.) and invokes appropriate Salesforce updates or calls `GetEntitlements`.</li>
+                                <li>**Python Snippet (SQS Message Processing):**</li>
+                                <div class="code-block">
+                                    <pre><code>import json
+
+def process_sqs_message(event, context):
+    for record in event['Records']:
+        message_body = json.loads(record['body'])
+        sns_message = json.loads(message_body['Message'])
+        
+        action = sns_message.get('action')
+        customer_id = sns_message.get('customer-identifier')
+        product_code = sns_message.get('product-code')
+
+        if action == 'subscribe-success':
+            # Update Salesforce for new subscription
+            pass
+        elif action == 'entitlement-updated':
+            # Call GetEntitlements, update Salesforce
+            pass
+        # ... handle other actions</code></pre>
+                                </div>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Step 4: Salesforce Integration -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">4. Salesforce Integration: Data Storage & Automation</h3>
+                    <p class="mb-4 text-gray-700">The transformed data is securely pushed into Salesforce custom objects, triggering automated business logic for billing and reporting.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">AWS Lambda<br/>(Data Ready)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Salesforce REST<br/>API Call</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Salesforce Custom<br/>Objects</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Salesforce<br/>Automation (Apex/Flows)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Billing &<br/>Reporting</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**Salesforce REST API:** Lambda uses authenticated HTTP `POST`/`PATCH` requests to Salesforce.</li>
+                        <li>**Authentication:** Implement OAuth 2.0 (e.g., JWT Bearer flow) with credentials from Secrets Manager.</li>
+                        <li>**Data Mapping:** Map incoming JSON from Lambda to Salesforce custom object fields.</li>
+                        <li>**Salesforce Custom Objects:**
+                            <ul>
+                                <li>`AWS_Marketplace_Subscription__c`: To store subscription details.</li>
+                                <li>`AWS_Usage_Record__c`: To store metered usage (daily/monthly aggregates).</li>
+                                <li>`AWS_Customer_ID__c` (on `Account` object): Map `CustomerIdentifier` to existing Snyk Accounts.</li>
+                            </ul>
+                        </li>
+                        <li>**Salesforce Automation:** Trigger Apex or Flows on `AWS_Usage_Record__c` creation/update.
+                            <ul>
+                                <li>Calculate final billable amounts based on Snyk's pricing logic.</li>
+                                <li>Update related Opportunity/Contract records.</li>
+                                <li>Generate or update Invoice Line Items.</li>
+                            </ul>
+                        </li>
+                        <li>**Engineering Note:** Utilize Salesforce External IDs to handle upserts and prevent duplicate records. Batch API calls to stay within Salesforce API limits.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 5: Security & Credentials Management -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">5. Security & Credentials Management</h3>
+                    <p class="mb-4 text-gray-700">Secure access and data protection are paramount, implemented through robust AWS IAM and Secrets Manager, along with secure Salesforce integration patterns.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">AWS Lambda<br/>Execution Role</div>
+                        <span class="flow-arrow">↔</span>
+                        <div class="flow-box">AWS IAM<br/>(Least Privilege)</div>
+                        <span class="flow-arrow">↔</span>
+                        <div class="flow-box">AWS Secrets<br/>Manager</div>
+                        <span class="flow-arrow">↔</span>
+                        <div class="flow-box">Salesforce<br/>Connected App</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**AWS IAM:**
+                            <ul>
+                                <li>Create dedicated IAM roles for Lambda functions.</li>
+                                <li>Apply least-privilege policies: grant only necessary permissions (e.g., `s3:GetObject`, `secretsmanager:GetSecretValue`, `aws-marketplace:BatchMeterUsage`).</li>
+                                <li>**Example IAM Policy Statement (Partial):**</li>
+                                <div class="code-block">
+                                    <pre><code>{
+    "Effect": "Allow",
+    "Action": [
+        "s3:GetObject",
+        "secretsmanager:GetSecretValue",
+        "aws-marketplace:BatchMeterUsage",
+        "aws-marketplace:GetEntitlements"
+    ],
+    "Resource": [
+        "arn:aws:s3:::your-billing-reports-bucket/*",
+        "arn:aws:secretsmanager:*:*:secret:salesforce-api-creds*",
+        "*"
+    ]
+}</code></pre>
+                                </div>
+                            </ul>
+                        </li>
+                        <li>**AWS Secrets Manager:** Store Salesforce API `client_id` and `client_secret` (and any other sensitive config) here. Lambda retrieves these at runtime.</li>
+                        <li>**Salesforce Connected App:** Configure for OAuth 2.0 (JWT Bearer flow is recommended for server-to-server). Ensure correct API scopes are assigned (e.g., `api`, `full`).</li>
+                        <li>**AWS CloudTrail:** Monitor all AWS API calls for auditing and security analysis.</li>
+                    </ul>
+                </div>
+
+                <!-- Step 6: Data Reconciliation & Reporting -->
+                <div class="detail-card">
+                    <h3 class="text-2xl font-bold">6. Data Reconciliation & Reporting</h3>
+                    <p class="mb-4 text-gray-700">Establishing robust reconciliation processes is crucial to ensure data accuracy and maintain financial integrity.</p>
+                    <div class="flex flex-col md:flex-row items-center justify-start gap-4 flex-wrap">
+                        <div class="flow-box">AWS S3<br/>(Data Feeds)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">AWS Glue / Athena<br/>(Querying)</div>
+                        <span class="flow-arrow">→</span>
+                        <div class="flow-box">Custom Reports<br/>(SQL)</div>
+                        <span class="flow-arrow">↔</span>
+                        <div class="flow-box">Salesforce<br/>Dashboards</div>
+                        <span class="flow-arrow">↔</span>
+                        <div class="flow-box">Financial<br/>Reconciliation</div>
+                    </div>
+                    <ul class="list-disc list-inside text-sm mt-4 space-y-2">
+                        <li>**AWS Marketplace Data Feeds (S3):** Utilize `Billing_Event` and `Tax_Item` data feeds for granular reconciliation. These are immutable, versioned CSVs (Pages 299-341).</li>
+                        <li>**AWS Glue & Athena:** Use Glue Crawlers to catalog S3 data feeds, then query with Athena (SQL) for custom reports.</li>
+                        <li>**Sample Query (Simplified Billing Event Aggregation):**</li>
+                        <div class="code-block">
+                            <pre><code>SELECT 
+    product_id,
+    SUM(CASE WHEN transaction_type = 'SELLER_REV_SHARE' THEN amount ELSE 0 END) AS total_revenue,
+    SUM(CASE WHEN transaction_type = 'AWS_REV_SHARE' THEN amount ELSE 0 END) AS total_aws_fee
+FROM 
+    billingeventfeed_v1
+WHERE 
+    action = 'INVOICED'
+    AND invoice_date BETWEEN '2025-01-01' AND '2025-01-31'
+GROUP BY 
+    product_id;</code></pre>
+                        </div>
+                        <li>**Salesforce Reporting:** Develop dashboards to compare ingested data against AWS Marketplace reports, highlight discrepancies, and track key billing KPIs.</li>
+                        <li>**Reconciliation Process:** Define a clear operational process for monthly reconciliation, identifying and resolving any data mismatches.</li>
+                    </ul>
                 </div>
             </div>
         </section>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
-            <section id="team" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-2xl font-bold text-[#0D47A1] text-center mb-6">The Team: Resource Allocation (FTE)</h2>
+            <section id="team" class="phase-card p-8">
+                <h2 class="text-2xl font-bold section-header-text text-center mb-6">The Team: Resource Allocation (FTE)</h2>
                 <p class="text-md text-gray-600 mb-6 text-center">A dedicated, cross-functional team will drive this project, ensuring expertise across AWS, Salesforce, and quality assurance.</p>
                 <div class="chart-container h-80 md:h-96">
                     <canvas id="resourceChart"></canvas>
                 </div>
+                <p class="text-xs text-gray-500 mt-4 text-center">This bar chart illustrates the FTE allocation for core roles, ensuring sufficient resources for successful project execution.</p>
             </section>
 
-            <section id="risks" class="bg-white rounded-2xl shadow-xl p-8">
-                <h2 class="text-2xl font-bold text-[#0D47A1] text-center mb-6">The Challenge: Navigating Project Risks</h2>
+            <section id="risks" class="phase-card p-8">
+                <h2 class="text-2xl font-bold section-header-text text-center mb-6">The Challenge: Navigating Project Risks</h2>
                 <p class="text-md text-gray-600 mb-6 text-center">Proactive risk management is key. We have identified potential challenges and established clear mitigation strategies for each.</p>
                 <div class="space-y-3">
-                    <div class="p-3 bg-blue-50 border-l-4 border-blue-400 rounded">
+                    <div class="p-3 highlight-bg border-l-4 border-blue-400 rounded">
                         <h3 class="font-bold text-blue-800">Data Mismatch/Inaccuracy</h3>
-                        <p class="text-sm text-blue-700">Mitigation: Thorough UAT and robust data validation in Lambda.</p>
+                        <p class="text-sm text-blue-700">Mitigation: Thorough UAT; robust data validation in Lambda; comprehensive reconciliation reports in Salesforce.</p>
                     </div>
-                    <div class="p-3 bg-yellow-50 border-l-4 border-yellow-400 rounded">
+                    <div class="p-3 highlight-bg border-l-4 border-yellow-400 rounded">
                         <h3 class="font-bold text-yellow-800">Salesforce API Limits</h3>
-                        <p class="text-sm text-yellow-700">Mitigation: Implement batching for API calls and monitor usage.</p>
+                        <p class="text-sm text-yellow-700">Mitigation: Implement batching for API calls; monitor API usage and scale resources if necessary.</p>
                     </div>
-                    <div class="p-3 bg-red-50 border-l-4 border-red-400 rounded">
+                    <div class="p-3 highlight-bg border-l-4 border-red-400 rounded">
                         <h3 class="font-bold text-red-800">Security Vulnerabilities</h3>
-                        <p class="text-sm text-red-700">Mitigation: Adhere to AWS & Salesforce security best practices.</p>
+                        <p class="text-sm text-red-700">Mitigation: Adhere to AWS & Salesforce security best practices; regular security audits and penetration testing.</p>
                     </div>
-                    <div class="p-3 bg-green-50 border-l-4 border-green-400 rounded">
+                    <div class="p-3 highlight-bg border-l-4 border-green-400 rounded">
                         <h3 class="font-bold text-green-800">Slow Performance</h3>
-                        <p class="text-sm text-green-700">Mitigation: Optimize Lambda runtime and Salesforce query efficiency.</p>
+                        <p class="text-sm text-green-700">Mitigation: Optimize Lambda runtime; optimize Salesforce query efficiency and Apex triggers for large data volumes.</p>
                     </div>
                 </div>
+                <p class="text-xs text-gray-500 mt-4 text-center">Each card outlines a potential project risk and its corresponding engineering mitigation strategy.</p>
             </section>
         </div>
 
-        <section id="detailed-architecture" class="my-12">
-            <div class="bg-white rounded-2xl shadow-xl p-8 md:p-12">
-                <h2 class="text-3xl font-bold text-[#0D47A1] text-center mb-8">Deep Dive: Architecture Step-by-Step</h2>
-                <p class="max-w-3xl mx-auto text-lg text-gray-600 mb-10 text-center">
-                    Understanding the granular components and interactions at each stage is crucial for successful implementation and maintenance.
-                </p>
-
-                <div class="space-y-8">
-                    <!-- Step 1: Snyk Backend -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">1. Snyk Backend (Usage Tracking & Metering)</h3>
-                        <p class="text-md mb-2">Snyk's internal systems continuously track customer consumption of features and services. This raw usage data is then aggregated and prepared for AWS Marketplace.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Core Logic:** Internal Snyk application logic to capture and summarize usage.</li>
-                            <li>**API Call:** Calls `AWS Marketplace MeterUsage` API hourly, sending consumption data for each defined product dimension.</li>
-                            <li>**Data Sent:** Buyer Account ID, Product Code, Usage Dimensions (e.g., 'scanned_lines', 'active_users'), Quantity.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 2: AWS Marketplace -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">2. AWS Marketplace (Billing & Reporting)</h3>
-                        <p class="text-md mb-2">AWS Marketplace processes the metering records and manages customer entitlements, ultimately generating comprehensive billing reports for sellers.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Metering Service:** Aggregates hourly usage data received from Snyk.</li>
-                            <li>**Entitlement Service:** Provides customer subscription details (e.g., via `GetEntitlements`).</li>
-                            <li>**Report Generation:** Produces various billing and usage reports (e.g., Daily Usage, Monthly Billing Reports) and deposits them into the seller's S3 bucket.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 3: AWS S3 (Report Storage & Event Source) -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">3. AWS S3 (Report Storage & Event Source)</h3>
-                        <p class="text-md mb-2">A dedicated S3 bucket serves as the secure landing zone for AWS Marketplace reports, triggering the next stage of the data pipeline.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Secure Storage:** Stores CSV reports delivered by AWS Marketplace.</li>
-                            <li>**Event Trigger:** Configured with S3 Event Notifications or an AWS EventBridge rule to detect new `.csv` file uploads.</li>
-                            <li>**Purpose:** Initiates the data processing workflow by invoking the AWS Lambda function.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 4: AWS Lambda (ETL & Salesforce Integration) -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">4. AWS Lambda (ETL & Salesforce Integration)</h3>
-                        <p class="text-md mb-2">This serverless function is the core of the data transformation and ingestion process, acting as the bridge between AWS and Salesforce.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Trigger:** Invoked by S3 event when a new report arrives.</li>
-                            <li>**Data Extraction:** Reads and parses the CSV file from S3.</li>
-                            <li>**Data Transformation:** Maps AWS report fields to Salesforce custom object fields.</li>
-                            <li>**Salesforce API Call:** Authenticates with Salesforce and uses REST API (`POST`, `PATCH`) to create/update `AWS_Usage_Record__c` and `AWS_Marketplace_Subscription__c` objects.</li>
-                            <li>**Error Handling & Logging:** Includes `try/catch` blocks, retries, and CloudWatch logging for operational visibility.</li>
-                            <li>**IAM Role:** Uses an AWS IAM Role with minimal permissions to S3 and Secrets Manager.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 5: AWS Secrets Manager (Credential Security) -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">5. AWS Secrets Manager (Credential Security)</h3>
-                        <p class="text-md mb-2">Ensures secure storage and retrieval of sensitive Salesforce API credentials, preventing hardcoding in Lambda code.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Secure Storage:** Stores Salesforce OAuth `client_id`, `client_secret`, and potentially username/password.</li>
-                            <li>**Integration:** Lambda function retrieves these credentials at runtime to authenticate with Salesforce.</li>
-                        </ul>
-                    </div>
-
-                    <!-- Step 6: Salesforce (Data Ingestion & Automation) -->
-                    <div class="detail-box p-6 rounded-lg shadow-md">
-                        <h3 class="text-2xl font-bold mb-3 text-[#1976D2]">6. Salesforce (Data Ingestion & Automation)</h3>
-                        <p class="text-md mb-2">The final destination for the billing data, where it is stored, processed, and used for revenue operations.</p>
-                        <ul class="list-disc list-inside text-sm pl-4 space-y-1">
-                            <li>**Custom Objects:** `AWS_Marketplace_Subscription__c` and `AWS_Usage_Record__c` to store data.</li>
-                            <li>**Salesforce REST API:** Endpoint for Lambda to interact with Salesforce objects.</li>
-                            <li>**Connected App:** Manages API access and OAuth authentication.</li>
-                            <li>**Apex/Flows:** Automation logic on `AWS_Usage_Record__c` to calculate charges, update invoices, and link to existing customer `Account` records.</li>
-                            <li>**Reporting & Dashboards:** Provides visibility into AWS Marketplace usage and billing data for Finance and Sales Ops.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </section>
-
     </main>
 
-    <footer class="bg-[#0D47A1] text-white p-6 text-center mt-12">
-        <p>Driving Efficiency and Growth Through Automation</p>
+    <footer class="header-bg text-white p-6 text-center mt-12">
+        <p>Driving Efficiency and Growth Through Automated Billing</p>
     </footer>
 
     <script>
